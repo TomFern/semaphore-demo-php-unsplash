@@ -17,7 +17,7 @@ blocks:
       env_vars:
         - name: APP_ENV
           value: development
-  - name: Tests
+  - name: Code analysis
     task:
       prologue:
         commands:
@@ -32,13 +32,24 @@ blocks:
         - name: Code Sniffer
           commands:
             - php vendor/bin/phpcs -n --standard=PSR2 app routes resources
-        - name: Integration Test
-          commands:
-            - cp .env.example .env
-            - 'php artisan key:generate'
-            - php vendor/bin/phpunit
         - name: Security Test
           commands:
             - 'vendor/bin/security-checker security:check composer.lock'
+  - name: Tests
+    task:
       secrets:
         - name: unsplash
+      prologue:
+        commands:
+          - checkout
+          - cache restore
+          - cp .env.example .env
+          - 'php artisan key:generate'
+      jobs:
+        - name: Integration Tests
+          commands:
+            - php vendor/bin/phpunit
+        - name: Browser Tests
+          commands:
+            - php artisan serve &
+            - php artisan dusk
