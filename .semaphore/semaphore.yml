@@ -52,5 +52,5 @@ blocks:
         - name: Browser Tests
           commands:
             - 'php artisan dusk:chrome-driver'
-            - php artisan serve &
+            - php artisan serve --port=8021 &
             - php artisan dusk
