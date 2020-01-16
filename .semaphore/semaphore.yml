@@ -14,6 +14,9 @@ blocks:
             - cache restore
             - composer install
             - cache store
+      env_vars:
+        - name: APP_ENV
+          value: development
   - name: Tests
     task:
       prologue:
