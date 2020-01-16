@@ -51,6 +51,6 @@ blocks:
             - php vendor/bin/phpunit
         - name: Browser Tests
           commands:
-            - 'php artisan:chrome-driver'
+            - 'php artisan dusk:chrome-driver'
             - php artisan serve &
             - php artisan dusk
