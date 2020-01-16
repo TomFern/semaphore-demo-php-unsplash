@@ -2,12 +2,13 @@
 
 # Unsplash Image Gallery Demo
 
-This is a PHP Laravel image gallery demo that pulls images from the [Unsplash API](https://unsplash.com/)
+This is a PHP Laravel image gallery demo that pulls images from the [Unsplash PHP API](https://github.com/unsplash/unsplash-php).
 
 ## Prerequisites
 
 Obtain a API Key from Unsplash:
-- Sign up to Unsplash.
+
+- Sign up to [Unsplash](https://unsplash.com)
 - Go to [Applications](https://unsplash.com/oauth/applications)
 - Create a **New Application**.
 - Accept the Terms.
@@ -35,16 +36,19 @@ $ cp .env.example.unsplash .env-unsplash
 - Prepare the environment:
 
 ```
+$ export APP_ENV=development
 $ source .env-unsplash
 $ cp .env.example .env
 $ php artisan key:generate
 ```
 
-- Start the development server:
+- Start the development server on [http://127.0.0.1:8000](http://127.0.0.1:8000):
 
 ```
 $ php artisan serve
 ```
+
+![Gallery](./screenshots/gallery.png)
 
 ## CI Pipeline
 
