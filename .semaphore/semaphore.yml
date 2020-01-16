@@ -29,7 +29,7 @@ blocks:
         - name: Code Sniffer
           commands:
             - php vendor/bin/phpcs -n --standard=PSR2 app routes resources
-        - name: Unit Tests
+        - name: Integration Test
           commands:
             - cp .env.example .env
             - 'php artisan key:generate'
@@ -37,3 +37,5 @@ blocks:
         - name: Security Test
           commands:
             - 'vendor/bin/security-checker security:check composer.lock'
+      secrets:
+        - name: unsplash
