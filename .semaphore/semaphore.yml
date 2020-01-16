@@ -11,6 +11,7 @@ blocks:
         - name: Composer
           commands:
             - checkout
+            - cd src
             - cache restore
             - composer install
             - cache store
@@ -22,6 +23,7 @@ blocks:
       prologue:
         commands:
           - checkout
+          - cd src
           - cache restore
       jobs:
         - name: Mess Detect
@@ -35,6 +37,9 @@ blocks:
         - name: Security Test
           commands:
             - 'vendor/bin/security-checker security:check composer.lock'
+      env_vars:
+        - name: APP_ENV
+          value: test
   - name: Tests
     task:
       secrets:
@@ -42,6 +47,7 @@ blocks:
       prologue:
         commands:
           - checkout
+          - cd src
           - cache restore
           - cp .env.example .env
           - 'php artisan key:generate'
@@ -54,3 +60,6 @@ blocks:
             - 'php artisan dusk:chrome-driver'
             - php artisan serve --port=8021 &
             - php artisan dusk
+      env_vars:
+        - name: APP_ENV
+          value: test
