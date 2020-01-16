@@ -14,4 +14,3 @@
 Route::get('/', 'ImageGalleryController@index');
 Route::get('/gallery', 'ImageGalleryController@index');
 Route::post('/gallery/search', 'ImageGalleryController@search');
-
