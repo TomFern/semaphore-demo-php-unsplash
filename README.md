@@ -21,6 +21,7 @@ Obtain a API Key from Unsplash:
 - Install dependencies:
 
 ```
+$ cd src
 $ composer install
 ```
 
