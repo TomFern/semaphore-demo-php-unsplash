@@ -18,10 +18,16 @@ blocks:
       env_vars:
         - name: APP_ENV
           value: development
+      prologue:
+        commands:
+          - phpbrew --no-progress install 7.4.12
+          - sem-version php 7.4.12
   - name: Code analysis
     task:
       prologue:
         commands:
+          - phpbrew --no-progress install 7.4.12
+          - sem-version php 7.4.12
           - checkout
           - cd src
           - cache restore
@@ -46,6 +52,8 @@ blocks:
         - name: unsplash
       prologue:
         commands:
+          - phpbrew --no-progress install 7.4.12
+          - sem-version php 7.4.12
           - checkout
           - cd src
           - cache restore
