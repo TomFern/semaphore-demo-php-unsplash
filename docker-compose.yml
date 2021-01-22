@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  webapp:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.development
+    ports:
+      - "8000:80"
+    volumes:
+      - ./src:/var/www
+    environment:
+      - APP_KEY=SomeRandomStringToAddSecurity123
+      - APP_ENV=development
+      - APP_DEBUG=true
+      - APACHE_RUN_USER=apache-www-volume
+      - APACHE_RUN_GROUP=apache-www-volume
+      - UNSPLASH_ACCESS_KEY=${UNSPLASH_ACCESS_KEY}
+      - UNSPLASH_SECRET_KEY=${UNSPLASH_SECRET_KEY}
