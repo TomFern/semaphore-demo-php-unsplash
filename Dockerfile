@@ -1,4 +1,4 @@
-FROM php:7-apache
+FROM registry.semaphoreci.com/php:7.4-node
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY start-apache /usr/local/bin
