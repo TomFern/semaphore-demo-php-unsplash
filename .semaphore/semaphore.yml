@@ -62,7 +62,7 @@ blocks:
             - php vendor/bin/phpunit
         - name: Browser Tests
           commands:
-            - 'php artisan dusk:chrome-driver'
+            - php artisan dusk:chrome-driver 87
             - php artisan serve --port=8021 &
             - php artisan dusk
       env_vars:
