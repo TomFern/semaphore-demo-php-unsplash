@@ -20,12 +20,12 @@ blocks:
           value: development
       prologue:
         commands:
-          - sem-version php 7.4.12
+          - sem-version php 7.4.14
   - name: Code analysis
     task:
       prologue:
         commands:
-          - sem-version php 7.4.12
+          - sem-version php 7.4.14
           - checkout
           - cd src
           - cache restore
@@ -50,7 +50,7 @@ blocks:
         - name: unsplash
       prologue:
         commands:
-          - sem-version php 7.4.12
+          - sem-version php 7.4.14
           - checkout
           - cd src
           - cache restore
