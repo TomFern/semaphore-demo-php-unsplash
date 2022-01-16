@@ -1,70 +1,13 @@
 version: v1.0
-name: CI Pipeline
+name: Initial Pipeline
 agent:
   machine:
     type: e1-standard-2
-    os_image: ubuntu1804
+    os_image: ubuntu2004
 blocks:
-  - name: Install dependencies
+  - name: 'Block #1'
     task:
       jobs:
-        - name: Composer
+        - name: 'Job #1'
           commands:
             - checkout
-            - cd src
-            - cache restore
-            - composer install
-            - cache store
-      env_vars:
-        - name: APP_ENV
-          value: development
-      prologue:
-        commands:
-          - sem-version php 7.4.14
-  - name: Code analysis
-    task:
-      prologue:
-        commands:
-          - sem-version php 7.4.14
-          - checkout
-          - cd src
-          - cache restore
-      jobs:
-        - name: Mess Detect
-          commands:
-            - php vendor/bin/phpmd routes  json phpmd_rules.xml
-            - php vendor/bin/phpmd resources  json phpmd_rules.xml
-            - php vendor/bin/phpmd app/Http  json phpmd_rules.xml
-        - name: Code Sniffer
-          commands:
-            - php vendor/bin/phpcs -n --standard=PSR2 app routes resources
-        - name: Security Test
-          commands:
-            - 'vendor/bin/security-checker security:check composer.lock'
-      env_vars:
-        - name: APP_ENV
-          value: test
-  - name: Tests
-    task:
-      secrets:
-        - name: unsplash
-      prologue:
-        commands:
-          - sem-version php 7.4.14
-          - checkout
-          - cd src
-          - cache restore
-          - cp .env.example .env
-          - 'php artisan key:generate'
-      jobs:
-        - name: Integration Tests
-          commands:
-            - php vendor/bin/phpunit
-        - name: Browser Tests
-          commands:
-            - php artisan dusk:chrome-driver 87
-            - php artisan serve --port=8021 &
-            - php artisan dusk
-      env_vars:
-        - name: APP_ENV
-          value: test
