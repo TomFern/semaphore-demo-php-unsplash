@@ -1,19 +1,17 @@
 version: v1.0
-name: Pipeline 3
+name: "Deploy to Heroku \U0001F680"
 agent:
   machine:
-    type: e1-standard-2
+    type: e1-standard-8
     os_image: ubuntu1804
 blocks:
-  - name: 'Block #1'
+  - name: Deploy
     task:
       jobs:
-        - name: 'Job #1'
+        - name: Docker push
           commands:
             - 'echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin'
             - 'docker pull "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:$SEMAPHORE_WORKFLOW_ID'
-            - heroku login
-            - 'heroku container:login'
             - 'docker tag "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:$SEMAPHORE_WORKFLOW_ID registry.heroku.com/$HEROKU_APP/web'
             - 'docker push registry.heroku.com/$HEROKU_APP/web            '
             - 'heroku config:set UNSPLASH_ACCESS_KEY="$UNSPLASH_ACCESS_KEY"'
@@ -30,12 +28,12 @@ blocks:
       env_vars:
         - name: HEROKU_APP
           value: unsplash-tomfern
-  - name: 'Block #2'
+  - name: Tag image as latest
     task:
       secrets:
         - name: dockerhub
       jobs:
-        - name: 'Job #1'
+        - name: Docker tag
           commands:
             - 'echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin'
             - 'docker pull "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:$SEMAPHORE_WORKFLOW_ID'

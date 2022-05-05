@@ -1,14 +1,14 @@
 version: v1.0
-name: Pipeline 2
+name: Dockerize Pipeline
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: 'Block #1'
+  - name: 'Build Image '
     task:
       jobs:
-        - name: 'Job #1'
+        - name: Docker build
           commands:
             - echo "$DOCKER_PASSWORD" | docker login  --username "$DOCKER_USERNAME" --password-stdin
             - 'docker pull "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:latest || true'
@@ -23,13 +23,8 @@ blocks:
           - cd ..
       secrets:
         - name: dockerhub
-after_pipeline:
-  task:
-    jobs:
-      - name: 'Job #1'
-        commands: []
 promotions:
   - name: Deploy
     pipeline_file: pipeline_3.yml
     auto_promote:
-      when: branch = 'master' AND result = 'passed'
+      when: ' result = ''passed'''
