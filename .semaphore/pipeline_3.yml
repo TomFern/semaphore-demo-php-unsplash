@@ -13,6 +13,7 @@ blocks:
             - 'echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin'
             - 'docker pull "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:$SEMAPHORE_WORKFLOW_ID'
             - 'docker tag "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:$SEMAPHORE_WORKFLOW_ID registry.heroku.com/$HEROKU_APP/web'
+            - 'heroku container:login'
             - 'docker push registry.heroku.com/$HEROKU_APP/web            '
             - 'heroku config:set UNSPLASH_ACCESS_KEY="$UNSPLASH_ACCESS_KEY"'
             - 'heroku config:set UNSPLASH_SECRET_KEY="$UNSPLASH_SECRET_KEY"'

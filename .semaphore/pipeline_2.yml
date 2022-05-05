@@ -1,5 +1,5 @@
 version: v1.0
-name: Dockerize Pipeline
+name: "Dockerize Pipeline \U0001F433"
 agent:
   machine:
     type: e1-standard-2
