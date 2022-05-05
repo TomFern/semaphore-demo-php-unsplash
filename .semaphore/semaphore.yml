@@ -61,6 +61,7 @@ blocks:
           commands:
             - 'php artisan dusk:chrome-driver 87'
             - php artisan serve --port=8021 &
+            - 'php artisan dusk:chrome-driver'
             - php artisan dusk
       env_vars:
         - name: APP_ENV
