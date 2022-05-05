@@ -20,6 +20,8 @@ blocks:
           - cache restore
           - composer install --no-dev
           - cd ..
+      secrets:
+        - name: dockerhub
 after_pipeline:
   task:
     jobs:
