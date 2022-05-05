@@ -66,3 +66,8 @@ blocks:
       env_vars:
         - name: APP_ENV
           value: test
+promotions:
+  - name: Dockerize
+    pipeline_file: pipeline_2.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'

@@ -1,0 +1,32 @@
+version: v1.0
+name: Pipeline 2
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: 'Block #1'
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - 'docker pull "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:latest || true'
+            - 'docker build --cache-from "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:latest -t "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:$SEMAPHORE_WORKFLOW_ID .'
+            - 'docker push "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:$SEMAPHORE_WORKFLOW_ID'
+      prologue:
+        commands:
+          - checkout
+          - cd src
+          - cache restore
+          - composer install --no-dev
+          - cd ..
+after_pipeline:
+  task:
+    jobs:
+      - name: 'Job #1'
+        commands: []
+promotions:
+  - name: Deploy
+    pipeline_file: pipeline_3.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
