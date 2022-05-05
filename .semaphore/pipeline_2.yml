@@ -1,0 +1,30 @@
+version: v1.0
+name: Dockerize Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: 'Build Image '
+    task:
+      jobs:
+        - name: Docker build
+          commands:
+            - echo "$DOCKER_PASSWORD" | docker login  --username "$DOCKER_USERNAME" --password-stdin
+            - 'docker pull "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:latest || true'
+            - 'docker build --cache-from "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:latest -t "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:$SEMAPHORE_WORKFLOW_ID .'
+            - 'docker push "$DOCKER_USERNAME"/semaphore-demo-php-unsplash:$SEMAPHORE_WORKFLOW_ID'
+      prologue:
+        commands:
+          - checkout
+          - cd src
+          - cache restore
+          - composer install --no-dev
+          - cd ..
+      secrets:
+        - name: dockerhub
+promotions:
+  - name: Deploy
+    pipeline_file: pipeline_3.yml
+    auto_promote:
+      when: ' result = ''passed'''
