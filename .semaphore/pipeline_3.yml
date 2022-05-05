@@ -24,6 +24,7 @@ blocks:
             - 'heroku container:release web --app $HEROKU_APP'
       secrets:
         - name: dockerhub
+        - name: heroku
         - name: unsplash
       env_vars:
         - name: HEROKU_APP
