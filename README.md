@@ -6,7 +6,7 @@ This is a PHP Laravel image gallery demo that pulls images from the [Unsplash PH
 
 ## Prerequisites
 
-Obtain a API Key from Unsplash:
+Obtain an API Key from Unsplash:
 
 - Sign up to [Unsplash](https://unsplash.com)
 - Go to [Applications](https://unsplash.com/oauth/applications)
